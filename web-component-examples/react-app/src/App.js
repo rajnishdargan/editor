@@ -5,7 +5,6 @@ import * as $ from "jquery";
 
 import "@project-sunbird/sunbird-questionset-editor-web-component/sunbird-questionset-editor.js";
 // import "@project-sunbird/sunbird-questionset-editor-web-component/styles.css";
-import "./Sunbird/sunbird-questionset-editor.js"
 
 function App() {
   const sunbirdQuestionsetEditorRef = useRef(null);
