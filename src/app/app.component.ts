@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { observationEditorConfig, observationRubricsEditorConfig, questionSetEditorConfig,
    questionEditorConfig, surveyEditorConfig } from './data';
-
+import ClassicEditor from '@project-sunbird/ckeditor-build-classic';
 const configMapper = {
   questionSet: questionSetEditorConfig,
   question: questionEditorConfig,
@@ -15,10 +15,17 @@ const configMapper = {
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
   title = 'Sunbird Questionset Editor';
   editor: any = localStorage.getItem('editorType') || '';
   public editorConfig: any = configMapper[this.editor];
+  public ckEditorLib: any;
+
+  ngOnInit() {
+    this.ckEditorLib = {
+      classicEditor: ClassicEditor
+    }
+  }
 
   editorEventListener(event) {
     this.editor = undefined;

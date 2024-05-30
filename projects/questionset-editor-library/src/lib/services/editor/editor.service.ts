@@ -41,6 +41,7 @@ export class EditorService {
   treeData: any;
   private _qualityFormConfig: any;
   private _isReviewerQualityCheckEnabled: boolean;
+  public ckEditorInstance: any;
   constructor(public treeService: TreeService, private toasterService: ToasterService,
               public configService: ConfigService, private telemetryService: EditorTelemetryService,
               private publicDataService: PublicDataService, private dataService: DataService, public httpClient: HttpClient) {

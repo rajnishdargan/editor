@@ -1,5 +1,5 @@
 <ng-container *ngIf="editor">
-    <lib-questionset-editor [editorConfig]="editorConfig" (editorEmitter)="editorEventListener($event)"></lib-questionset-editor>
+    <lib-questionset-editor [editorConfig]="editorConfig" [ckEditorLib]="ckEditorLib" (editorEmitter)="editorEventListener($event)"></lib-questionset-editor>
 </ng-container>
 <div *ngIf="!editor" class="ui container d-flex flex-jc-center flex-ai-center p-20">
     <button class="sb-btn sb-btn-normal sb-btn-outline-primary mr-10 font-weight-bold fs-1" (click)="setType('question')" >Question Editor</button>

@@ -29,6 +29,7 @@ let ecm;
 export class EditorComponent implements OnInit, OnDestroy, AfterViewInit {
 
   @Input() editorConfig: IEditorConfig | undefined;
+  @Input() ckEditorLib: any;
   @Output() editorEmitter = new EventEmitter<any>();
   @ViewChild('modal') private modal;
   public questionComponentInput: any = {};
@@ -104,7 +105,16 @@ export class EditorComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  setCkeditorInstance() {
+    console.log('ckEditorLib', this.ckEditorLib);
+    if (this.ckEditorLib.classicEditor) {
+      console.log('libs ==>', this.ckEditorLib.classicEditor);
+      this.editorService.ckEditorInstance = this.ckEditorLib;
+    }
+  }
+
   ngOnInit() {
+    this.setCkeditorInstance();
     this.setEditorConfig();
     this.editorService.initialize(this.editorConfig);
     this.editorMode = this.editorService.editorMode;

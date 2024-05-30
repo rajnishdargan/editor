@@ -1,5 +1,5 @@
 import { Component, OnInit, AfterViewInit, Output, Input, EventEmitter, OnChanges, ViewChild, ElementRef } from '@angular/core';
-import ClassicEditor from '@project-sunbird/ckeditor-build-classic';
+// import ClassicEditor from '@project-sunbird/ckeditor-build-classic';
 import * as _ from 'lodash-es';
 import { catchError, map } from 'rxjs/operators';
 import { throwError, Observable } from 'rxjs';
@@ -34,6 +34,7 @@ export class CkeditorToolComponent implements OnInit, AfterViewInit, OnChanges {
   initialized = false;
   public assetProxyUrl: any;
   public lastImgResizeWidth;
+  private ClassicEditor: any;
   constructor(private questionService: QuestionService, private editorService: EditorService,
               private toasterService: ToasterService, public configService: ConfigService) { }
   assetConfig: any = {};
@@ -69,6 +70,9 @@ export class CkeditorToolComponent implements OnInit, AfterViewInit, OnChanges {
   public emptyImageSearchMessage: any;
   public emptyVideoSearchMessage: any;
   ngOnInit() {
+    if (this.editorService.ckEditorInstance.classicEditor) {
+      this.ClassicEditor = this.editorService.ckEditorInstance.classicEditor;
+    }
     this.assetProxyUrl = _.get(this.editorService.editorConfig, 'config.assetProxyUrl') || _.get(this.configService.urlConFig, 'URLS.assetProxyUrl');
     this.initialFormConfig = _.get(config, 'uploadIconFormConfig');
     this.formConfig = _.get(config, 'uploadIconFormConfig');
@@ -251,7 +255,7 @@ export class CkeditorToolComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   initializeEditors() {
-    ClassicEditor.create(this.editorRef.nativeElement, {
+    this.ClassicEditor.create(this.editorRef.nativeElement, {
       alignment: {
         options: [
           { name: 'left', className: 'text-left' },
