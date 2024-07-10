@@ -1,44 +1,44 @@
-name: Publish Package
+# name: Publish Package
 
-on:
-  push:
-    branches:
-      - npm-publish  # Trigger on pushes to the npm-publish branch
+# on:
+#   push:
+#     branches:
+#       - npm-publish  # Trigger on pushes to the npm-publish branch
 
-jobs:
-  build-and-publish:
-    runs-on: ubuntu-latest
+# jobs:
+#   build-and-publish:
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v2
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '18'  # Adjust Node.js version as needed
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v2
+#         with:
+#           node-version: '18'  # Adjust Node.js version as needed
 
-      - name: Install Angular CLI
-        run: npm install -g @angular/cli@16 --no-progress
+#       - name: Install Angular CLI
+#         run: npm install -g @angular/cli@16 --no-progress
 
-      - name: Install npm dependencies
-        run: npm install --no-progress
+#       - name: Install npm dependencies
+#         run: npm install --no-progress
 
-      - name: Build and Test
-        run: |
-          npm run build-lib:prod
-          npm run test-coverage
+#       - name: Build and Test
+#         run: |
+#           npm run build-lib:prod
+#           npm run test-coverage
 
-      - name: Set up npm auth token
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
+#       - name: Set up npm auth token
+#         run: |
+#           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
 
-      - name: Publish to npm
-        run: |
-          npm pack ./dist/questionset-editor-library
-          npm publish project-nebula-questionset-editor-*.tgz --access public
+#       - name: Publish to npm
+#         run: |
+#           npm pack ./dist/questionset-editor-library
+#           npm publish project-nebula-questionset-editor-*.tgz --access public
 
-      - name: Publish web component to npm
-        run: |
-          npm pack ./web-component
-          npm publish project-nebula-questionset-editor-web-component-*.tgz --access public
+#       - name: Publish web component to npm
+#         run: |
+#           npm pack ./web-component
+#           npm publish project-nebula-questionset-editor-web-component-*.tgz --access public
