@@ -43,7 +43,7 @@ jobs:
           command: |
             if [ -z $CIRCLE_PR_NUMBER ]; then
               npm run build-lib && npm pack ./dist/questionset-editor-library
-              echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
+              echo "//registry.npmjs.org/:_authToken=" > ~/.npmrc
               npm publish project-nebula-questionset-editor-*
             else
               npm run build-lib && npm pack ./dist/questionset-editor-library
@@ -53,7 +53,7 @@ jobs:
           command: |
             if [ -z $CIRCLE_PR_NUMBER ]; then
               npm run build-web-component && npm pack ./web-component
-              echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
+              echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
               npm publish project-nebula-questionset-editor-web-component-* --access=public
             else
               npm run build-web-component && npm pack ./web-component
