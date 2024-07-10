@@ -1,65 +1,65 @@
-# version: 2.1
-# orbs:
-#   browser-tools: circleci/browser-tools@1.4.8
-# jobs:
-#   build:
-#     working_directory: ~/sunbird-questionset-editor
-#     docker:
-#     - image: cimg/node:18.19.1-browsers
-#     steps:
-#       - browser-tools/install-chrome
-#       - run:
-#           command: google-chrome --version
-#       - checkout:
-#           path: ~/sunbird-questionset-editor
-#       - run:
-#           name: Node version
-#           command: 'node --version'
-#       - run:
-#           name: Installing angular cli
-#           command: 'npm install -g @angular/cli@16 --no-progress'
-#       #~ - restore_cache:
-#           #~ key: dependency-cache-{{ checksum "package.json" }}
-#       - run:
-#           name: Installing npm deps
-#           command: 'npm install --no-progress'
-#       - save_cache:
-#           key: dependency-cache-{{ checksum "package.json" }}
-#           paths: ./node_modules
-#       - run:
-#           name: ng lint and building
-#           command: 'mkdir -p /tmp/logs && npm run build-lib:prod | tee /tmp/logs/build.log'
-#       - run:
-#           name: Executing test cases
-#           command: 'npm run test-coverage | tee /tmp/logs/test_cases.log'
-#       - run:
-#           name: Install sonar scanner
-#           command: npm install -g sonarqube-scanner
-#       - run:
-#           name: Run sonar scanner
-#           command: 'cd ~/sunbird-questionset-editor && sonar-scanner'
-#       - run:
-#           name: Publish to NPM
-#           command: |
-#             if [ -z $CIRCLE_PR_NUMBER ]; then
-#               npm run build-lib && npm pack ./dist/questionset-editor-library
-#               echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-#               npm publish project-sunbird-sunbird-questionset-editor-*
-#             else
-#               npm run build-lib && npm pack ./dist/questionset-editor-library
-#             fi
-#       - run:
-#           name: Publish web component to NPM
-#           command: |
-#             if [ -z $CIRCLE_PR_NUMBER ]; then
-#               npm run build-web-component && npm pack ./web-component
-#               echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
-#               npm publish project-sunbird-sunbird-questionset-editor-web-component-* --access=public
-#             else
-#               npm run build-web-component && npm pack ./web-component
-#             fi
-# workflows:
-#   version: 2.1
-#   build_and_test:
-#     jobs:
-#       - build
+version: 2.1
+orbs:
+  browser-tools: circleci/browser-tools@1.4.8
+jobs:
+  build:
+    working_directory: ~/sunbird-questionset-editor
+    docker:
+    - image: cimg/node:18.19.1-browsers
+    steps:
+      - browser-tools/install-chrome
+      - run:
+          command: google-chrome --version
+      - checkout:
+          path: ~/sunbird-questionset-editor
+      - run:
+          name: Node version
+          command: 'node --version'
+      - run:
+          name: Installing angular cli
+          command: 'npm install -g @angular/cli@16 --no-progress'
+      #~ - restore_cache:
+          #~ key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: Installing npm deps
+          command: 'npm install --no-progress'
+      - save_cache:
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths: ./node_modules
+      - run:
+          name: ng lint and building
+          command: 'mkdir -p /tmp/logs && npm run build-lib:prod | tee /tmp/logs/build.log'
+      - run:
+          name: Executing test cases
+          command: 'npm run test-coverage | tee /tmp/logs/test_cases.log'
+      # - run:
+      #     name: Install sonar scanner
+      #     command: npm install -g sonarqube-scanner
+      # - run:
+      #     name: Run sonar scanner
+      #     command: 'cd ~/sunbird-questionset-editor && sonar-scanner'
+      - run:
+          name: Publish to NPM
+          command: |
+            if [ -z $CIRCLE_PR_NUMBER ]; then
+              npm run build-lib && npm pack ./dist/questionset-editor-library
+              echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
+              npm publish project-nebula-questionset-editor-*
+            else
+              npm run build-lib && npm pack ./dist/questionset-editor-library
+            fi
+      - run:
+          name: Publish web component to NPM
+          command: |
+            if [ -z $CIRCLE_PR_NUMBER ]; then
+              npm run build-web-component && npm pack ./web-component
+              echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > ~/.npmrc
+              npm publish project-nebula-questionset-editor-web-component-* --access=public
+            else
+              npm run build-web-component && npm pack ./web-component
+            fi
+workflows:
+  version: 2.1
+  build_and_test:
+    jobs:
+      - build
